@@ -5,21 +5,63 @@ package robot
 // Step 1
 // Define Dir type here.
 // Define N, E, S, W here.
+var N Dir = 0
+var E Dir = 1
+var S Dir = 2
+var W Dir = 3
 
 func Right() {
-	panic("Please implement the Right function")
+	switch Step1Robot.Dir {
+	case N:
+		Step1Robot.Dir = E
+	case E:
+		Step1Robot.Dir = S
+	case S:
+		Step1Robot.Dir = W
+	case W:
+		Step1Robot.Dir = N
+	}
 }
 
 func Left() {
-	panic("Please implement the Left function")
+	switch Step1Robot.Dir {
+	case N:
+		Step1Robot.Dir = W
+	case E:
+		Step1Robot.Dir = N
+	case S:
+		Step1Robot.Dir = E
+	case W:
+		Step1Robot.Dir = S
+	}
 }
 
 func Advance() {
-	panic("Please implement the Advance function")
+	switch Step1Robot.Dir {
+	case N:
+		Step1Robot.Y++
+	case E:
+		Step1Robot.X++
+	case S:
+		Step1Robot.Y--
+	case W:
+		Step1Robot.X--
+	}
 }
 
 func (d Dir) String() string {
-	panic("Please implement the String function")
+	switch d {
+	case N:
+		return "North"
+	case E:
+		return "East"
+	case S:
+		return "South"
+	case W:
+		return "West"
+	}
+
+	return ""
 }
 
 // Step 2
