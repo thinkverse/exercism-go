@@ -8,6 +8,10 @@ type Planet string
 func Age(seconds float64, planet Planet) float64 {
 	t := float64(31556700)
 
+	if planet == "Earth" {
+		return seconds / t
+	}
+
 	switch planet {
 	case "Mercury":
 		t *= 0.2408467
@@ -23,6 +27,8 @@ func Age(seconds float64, planet Planet) float64 {
 		t *= 84.016846
 	case "Neptune":
 		t *= 164.79132
+	default:
+		return -1.0
 	}
 
 	return seconds / t
