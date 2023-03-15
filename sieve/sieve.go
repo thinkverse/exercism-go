@@ -1,22 +1,18 @@
 package sieve
 
 func Sieve(limit int) []int {
-	var primes []int
+	primes := make([]int, 0, (limit / 2))
 
-	// Bool slice to cache prime numbers,
-	// mark all numbers first as primes.
-	cache := make([]bool, (limit + 1))
-	for i := 2; i <= limit; i++ {
-		cache[i] = true
-	}
+	// Bool slice to cache composite numbers.
+	composite := make([]bool, (limit + 1))
 
 	for i := 2; i <= limit; i++ {
-		if cache[i] {
+		if !composite[i] {
 			primes = append(primes, i)
 
-			// Mark composite numbers as non-primes.
+			// Mark all multiples of i as composite.
 			for j := i * i; j <= limit; j += i {
-				cache[j] = false
+				composite[j] = true
 			}
 		}
 	}
