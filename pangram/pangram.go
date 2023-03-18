@@ -1,17 +1,23 @@
 package pangram
 
+// Optimized algorithm using bit fields.
+// Thank you for the inspiration @bobahop
+//
+// https://exercism.org/profiles/bobahop/
 func IsPangram(input string) bool {
-	set := make(map[rune]bool, 26)
+	var mask uint32
 
-	for _, char := range input {
+	for i := 0; i < len(input); i++ {
+		char := byte(input[i])
+
 		if char <= 'Z' {
 			char += 1 << 5
 		}
 
 		if 'a' <= char && char <= 'z' {
-			set[char] = true
+			mask |= 1 << (char - 97)
 		}
 	}
 
-	return len(set) == 26
+	return mask == ((1 << 26) - 1)
 }
