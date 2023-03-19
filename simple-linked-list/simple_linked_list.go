@@ -1,27 +1,71 @@
 package linkedlist
 
+import "errors"
+
 // Define the List and Element types here.
+type List struct {
+	head *Element
+	size int
+}
+
+type Element struct {
+	value int
+	tail  *Element
+}
 
 func New(elements []int) *List {
-	panic("Please implement the New function")
+	list := new(List)
+
+	for i := 0; i < len(elements); i++ {
+		list.Push(elements[i])
+	}
+
+	return list
 }
 
 func (l *List) Size() int {
-	panic("Please implement the Size function")
+	return l.size
 }
 
 func (l *List) Push(element int) {
-	panic("Please implement the Push function")
+	l.size++
+
+	l.head = &Element{
+		value: element,
+		tail:  l.head,
+	}
 }
 
 func (l *List) Pop() (int, error) {
-	panic("Please implement the Pop function")
+	if l.head == nil {
+		return -1, errors.New("cannot Pop() when list is empty")
+	}
+
+	head := l.head
+
+	l.head = head.tail
+	l.size--
+
+	return head.value, nil
 }
 
 func (l *List) Array() []int {
-	panic("Please implement the Array function")
+	ints, idx := make([]int, l.size), l.size-1
+
+	for elem := l.head; elem != nil; elem = elem.tail {
+		ints[idx] = elem.value
+		idx--
+	}
+
+	return ints
 }
 
 func (l *List) Reverse() *List {
-	panic("Please implement the Reverse function")
+	list := new(List)
+
+	for elem := l.head; elem != nil; elem = elem.tail {
+		list.Push(elem.value)
+	}
+
+	return list
 }
