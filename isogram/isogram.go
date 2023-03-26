@@ -7,22 +7,30 @@ package isogram
 // Original version: https://exercism.org/tracks/go/exercises/isogram/solutions/thinkverse
 //
 // Optimized version: https://exercism.org/tracks/go/exercises/isogram/solutions/fant0mz
+//
+// Slightly more optimized version using a bit mask, thank you for the inspiration @bobahop
+//
+// https://exercism.org/profiles/bobahop/
 func IsIsogram(word string) bool {
-	seen := make([]bool, 1<<8)
+	var mask uint32
 
-	for _, char := range word {
-		// Deal only with uppercase letters.
-		if 97 <= char && char <= 122 {
-			char -= 32
+	for i := 0; i < len(word); i++ {
+		char := byte(word[i])
+
+		// Deal only with lowercase letters.
+		if char <= 'Z' {
+			char += 1 << 5
 		}
 
-		// Make sure we only add uppercase letters.
-		if 65 <= char && char <= 90 {
-			if seen[char] {
+		// Make sure we only add lowercase letters.
+		if 'a' <= char && char <= 'z' {
+			// Check if the character is recorded.
+			if (mask | (1 << (char - 97))) == mask {
 				return false
 			}
 
-			seen[char] = true
+			// Record the character in the bit mask.
+			mask |= 1 << (char - 97)
 		}
 	}
 
